@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Natural Disaster Impact Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Predict Disaster Impact</h1>
+    <form id="predictionForm">
+        <input type="number" id="year" placeholder="Year" required><br>
+        <input type="number" id="country_enc" placeholder="Country Code" required><br>
+        <input type="number" id="disaster_type_enc" placeholder="Disaster Type Code" required><br>
+        <input type="number" id="total_deaths" placeholder="Total Deaths" required><br>
+        <input type="number" id="total_affected" placeholder="Total Affected" required><br>
+        <input type="number" id="total_damages" placeholder="Total Damages" required><br>
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = {
+                year: parseInt(document.getElementById('year').value),
+                country_enc: parseInt(document.getElementById('country_enc').value),
+                disaster_type_enc: parseInt(document.getElementById('disaster_type_enc').value),
+                total_deaths: parseInt(document.getElementById('total_deaths').value),
+                total_affected: parseInt(document.getElementById('total_affected').value),
+                total_damages: parseInt(document.getElementById('total_damages').value),
+            };
+
+            fetch('http://127.0.0.1:5000/predict-impact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('result').textContent = "Predicted Impact: " + result.predicted_impact;
+            })
+            .catch(error => {
+                document.getElementById('result').textContent = "Error predicting impact.";
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
