@@ -20,5 +20,4 @@ It helps prioritize disaster relief and resource allocation based on severity.
 - **Joblib**
 
 ## Run Instructions
-```bash
-python app.py
+-Run the index file
