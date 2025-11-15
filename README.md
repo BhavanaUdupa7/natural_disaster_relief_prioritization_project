@@ -20,4 +20,4 @@ It helps prioritize disaster relief and resource allocation based on severity.
 - **Joblib**
 
 ## Run Instructions
--Run the index file
+Run the index file
